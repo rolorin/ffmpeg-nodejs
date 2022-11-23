@@ -1,4 +1,4 @@
-# About
+# Node ffmpeg connector and fragmentation library
 ---
 ```
 This is a simple node based libray for:
@@ -43,13 +43,16 @@ This is a simple node based libray for:
 - --output=[outputDir]/[output].[ext],
   - outputDir, the output directory for fragments as well as manifest files generated
   - output, the manifest file that stores segment details
-  - ext, this should be .mpd
-  - example: output/stream.mpd
+  - ext, this should be .mpd, if fragmenting else video format
+    - example: output/stream.mpd for fragmentation, output.mkv for conversion
+- convert
+  - for converting one video format to another
+    - example node index.js convert input=input.mp4 output=output.avi
 - --scales=[wxh]
   - There should be no space between scales, only comma.
   - The first value is width, and second is height.
   - Pass as many scales required.
-  - example: --scales=480:360,1280:720,1920:1080
+    - example: --scales=480:360,1280:720,1920:1080
 - s3[optional]
   - Pass this option, only if the generated files are to be pushed to s3. 
   - The directory structured specified in --output= will be followed.
