@@ -47,7 +47,7 @@ This is a simple node based libray for:
     - example: output/stream.mpd for fragmentation, output.mkv for conversion
 - convert
   - for converting one video format to another
-    - example node index.js convert input=input.mp4 output=output.avi
+    - example `node index.js convert input=input.mp4 output=output.avi`
 - --scales=[wxh]
   - There should be no space between scales, only comma.
   - The first value is width, and second is height.
