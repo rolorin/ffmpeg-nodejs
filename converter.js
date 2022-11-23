@@ -25,6 +25,7 @@ const baseCommand = ({ input, output, maps, scales, options }) =>
   -f dash ${output} && exit
   `;
 
+const convertCommand = ({input, output}) => `ffmpeg -i ${input} ${output}`
 // const converterScript = `ffmpeg - i sample.mp4 \
 // -map 0: v: 0 - map 0: a\?: 0 - map 0: v: 0 - map 0: a\?: 0 - map 0: v: 0 - map 0: a\?: 0 - map 0: v: 0 - map 0: a\?: 0 \
 // -b: v: 0 350k - c: v: 0 libx264 - filter: v: 0 "scale=480:360"  \
@@ -34,12 +35,16 @@ const baseCommand = ({ input, output, maps, scales, options }) =>
 // -use_timeline 1 - use_template 1 - adaptation_sets "id=0,streams=v  id=1,streams=a" \
 // -f dash output / output.mpd`
 
-const converter = ({ input = "", output = "", options = "", scales = [] }) => {
+const converter = ({ input = "", output = "", options = "", scales = [], convert = false }) => {
   let scalesOps = "";
   let mapsOps = "";
   const opts = optsGenerator({ opts: options });
   let index = 0;
 
+  if (convert) {
+    return processor({command: convertCommand({input, output})})
+  }
+  
   for (let scale of scales) {
     console.log("index", index, scale);
     scalesOps += scaleGenerator({ scaleNo: index, scale: scale });

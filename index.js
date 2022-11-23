@@ -17,12 +17,15 @@ const parser = {
   "--opts": (command) => {
     return { opts: command.split("=")[1] };
   },
-  "db": () => {
+  db: () => {
     return { db: true };
   },
-  "s3": () => {
+  s3: () => {
     return { s3: true };
-  }
+  },
+  "convert": () => {
+    return { convert: true };
+  },
 };
 
 (async () => {
@@ -30,18 +33,20 @@ const parser = {
   let converterCommands = {};
 
   for (let ops of cliOps) {
-    console.log(ops);
     const flag = ops.split("=")[0];
     if (parser[flag]) {
-      converterCommands = { ...converterCommands, ...parser[flag](ops) }
+      converterCommands = { ...converterCommands, ...parser[flag](ops) };
     }
   }
   try {
-    console.log("db connection initialized");
     let directory = converterCommands.output.split("/");
     directory = directory.splice(0, directory.length - 1).join("/");
-    await mkdir(directory, { recursive: true });
-    console.log(`Directory created ${directory}`)
+
+    if (directory) {
+      await mkdir(directory, { recursive: true });
+      console.log(`Directory created ${directory}`);
+    }
+
     await converter(converterCommands);
     console.log("Encodings done");
 
@@ -53,6 +58,7 @@ const parser = {
     if (cliOps["db"]) {
       console.log("Saving to db");
       await db.init();
+      console.log("db connection initialized");
       await storeUrl({ url: converterCommands.output });
     }
   } catch (error) {
