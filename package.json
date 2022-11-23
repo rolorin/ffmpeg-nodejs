@@ -15,7 +15,7 @@
   "author": "Roshan Bista",
   "license": "MIT",
   "dependencies": {
-    "@mysql/xdevapi": "^8.0.19",
-    "aws-sdk": "^2.653.0"
+    "@mysql/xdevapi": "^8.0.31",
+    "aws-sdk": "^2.1260.0"
   }
 }
